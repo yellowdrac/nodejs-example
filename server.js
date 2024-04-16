@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser')
 const db = require('./models')
 const userRoutes = require ('./routes/userRoutes')
 const ip = require('ip');
-const host = ip.address();
+const host = 'localhost';
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 const fs = require('fs')
@@ -19,13 +19,13 @@ const port = process.env.PORT || 3000
 
 //assigning the variable app to express
 const app = express()
-
+const cors = require('cors');
 //middleware
 app.use(express.json())
 app.use('/swagger-ui', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
-
+app.use(cors());
 // model.sync(options): https://sequelize.org/docs/v6/core-concepts/model-basics/#model-synchronization
 // User.sync() - This creates the table if it doesn't exist (and does nothing if it already exists)
 db.sequelize.sync().then(() => {

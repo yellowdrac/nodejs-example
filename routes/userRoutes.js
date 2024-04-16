@@ -3,7 +3,7 @@ const express = require('express')
 const userController = require('../controllers/userController')
 const { signup, login, getUser, updateUser, deleteUser } = userController
 const userAuth = require('../middlewares/userAuth')
-
+const authenticateToken  = require('../middlewares/authenticateToken')
 const router = express.Router()
 
 //signup endpoint
@@ -14,7 +14,7 @@ router.post('/users/signup', userAuth.saveUser, signup)
 router.post('/login', login)
 
 // users?query=
-router.get('/users', getUser)
+router.get('/users', authenticateToken,getUser)
 router.put('/users/:email', updateUser)
 router.delete('/users/:email', deleteUser)
 

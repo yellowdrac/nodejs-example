@@ -12,6 +12,7 @@ const { ACCESS_TOKEN_SECRET, ACCESS_TOKEN_EXPIRY, REFRESH_TOKEN_SECRET, REFRESH_
 const User = db.users;
 
 const broadcast = (clients, method, message) => {
+    if(clients){
     clients.forEach((client) => {
         if (client.readyState === WebSocket.OPEN) {
             console.log('[SERVER] broadcast(',method,'): ', JSON.stringify(message));
@@ -32,6 +33,7 @@ const broadcast = (clients, method, message) => {
               });
         }
     })
+    }
 }
 
 //login authentication
@@ -135,7 +137,7 @@ const getUser = async (req, res) => {
             if (user) {
                 return res.status(200).json(user);
             } else {
-                return res.status(400).send("Invalid request body");
+                return res.status(200).send("Email no encontrado");
             }
         }
     } catch (error) {
