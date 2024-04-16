@@ -123,7 +123,7 @@ const getUser = async (req, res) => {
                 }
             });
             if (users) {
-                return res.status(200).json(users);
+                return res.status(200).json({ users, newToken: req.newToken });
             } else {
                 return res.status(400).send("Invalid request body");
             }
@@ -135,7 +135,7 @@ const getUser = async (req, res) => {
                 attributes: { exclude: ['password'] }
             });
             if (user) {
-                return res.status(200).json(user);
+                return res.status(200).json({ users, newToken: req.newToken });
             } else {
                 return res.status(200).send("Email no encontrado");
             }
